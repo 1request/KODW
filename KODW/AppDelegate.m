@@ -7,12 +7,19 @@
 //
 
 #import "AppDelegate.h"
+#define kRequestActivity @"http://192.168.100.156:3000/collectionapi/activities"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    self.beacon = [Beacon new];
+    self.beacon.delegate = self;
+    if ([self.beacon respondsToSelector:@selector(startMonitorBeacon:major:minor:)]) {
+        [self.beacon startMonitorBeacon:kUUID_Estimote major:1000 minor:2000];
+    }
+    
     return YES;
 }
 							
@@ -36,11 +43,135 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"Entry" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [self NotifyWhenEntry];
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"Exit" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [self NotifyWhenExit];
+    }];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)NotifyWhenEntry{
+    
+    NSString *tip = @"Welcome to HKDC!";
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"KODW" message:tip delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    
+}
+
+- (void)NotifyWhenExit{
+    NSString *tip = @"Goodbye, See you next time in HKDC!";
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"KODW" message:tip delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
+#pragma mark - beacon delegate methods
+
+- (void)NotifyWhenEntryBeacon:(CLBeaconRegion *)beaconRegion{
+    
+    
+    NSString *tip = @"Welcome to HKDC !";
+    
+    if ([beaconRegion.minor integerValue] == 2000) {
+        
+        tip = @"Today's Event : KODW Workshop ";
+    }else if ([beaconRegion.minor integerValue] == 2001) {
+        
+        tip = @"Happy Hour Today ";
+    }
+    
+    
+    [self sendLocalNotificationWithMessage:tip];
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Entry" object:nil];
+    
+    NSLog(@"detect beacon %@", beaconRegion);
+    
+    NSString *majorMinor = [NSString stringWithFormat:@"%@-%@", [beaconRegion major], [beaconRegion minor]];
+    
+    [AppDelegate sendData:majorMinor];
+}
+
+- (void)NotifyWhenExitBeacon:(CLBeaconRegion *)beaconRegion{
+    NSString *tip = @"Goodbye, See you next time!";
+    
+    if ([beaconRegion.minor integerValue] == 2000) {
+        
+        tip = @"Today's Event : KODW Conference ";
+    }else if ([beaconRegion.minor integerValue] == 2001) {
+        
+        tip = @"Don't Forget Happy Hour Today :) ";
+    }
+    
+    
+    [self sendLocalNotificationWithMessage:tip];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Exit" object:nil];
+    
+    NSLog(@"detect beacon %@", beaconRegion);
+}
+
+
+#pragma mark - Local notifications
+- (void)sendLocalNotificationWithMessage:(NSString*)message
+{
+    UILocalNotification *notification = [UILocalNotification new];
+    
+    // Notification details
+    notification.alertBody = message;
+    // notification.alertBody = [NSString stringWithFormat:@"Entered beacon region for UUID: %@",
+    //                         region.proximityUUID.UUIDString];   // Major and minor are not available at the monitoring stage
+    notification.alertAction = NSLocalizedString(@"View Details", nil);
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+}
+
++ (void)sendData:(NSString *)beaconId
+{
+    NSLog(@"sending data...");
+    
+    NSNumber *time = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
+    
+    NSArray *objects = [NSArray arrayWithObjects:beaconId, @"0.5", @"HKDC", time, @"0", nil];
+    NSArray *keys = [NSArray arrayWithObjects:@"beaconid", @"strength", @"username", @"time", @"__v", nil];
+    NSDictionary *jsonDict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
+    
+    NSError *error;
+    NSData *requestData = [NSJSONSerialization dataWithJSONObject:jsonDict
+                                                          options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                            error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:requestData encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"jsonRequest is %@", jsonString);
+    
+    NSURL *url = [NSURL URLWithString:kRequestActivity];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+    
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody: requestData];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    if (connection) {
+        [connection start];
+    }
+    
 }
 
 @end

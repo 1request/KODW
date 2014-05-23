@@ -21,6 +21,10 @@
 		D1338090192F1B400010C76C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1338072192F1B400010C76C /* UIKit.framework */; };
 		D1338098192F1B400010C76C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1338096192F1B400010C76C /* InfoPlist.strings */; };
 		D133809A192F1B400010C76C /* KODWTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1338099192F1B400010C76C /* KODWTests.m */; };
+		D13380A9192F1BF80010C76C /* libBeacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D13380A7192F1BF80010C76C /* libBeacon.a */; };
+		D13380AA192F1BF80010C76C /* sim_libBeacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D13380A8192F1BF80010C76C /* sim_libBeacon.a */; };
+		D13380AC192F1C590010C76C /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D13380AB192F1C590010C76C /* CoreBluetooth.framework */; };
+		D13380AE192F1C5E0010C76C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D13380AD192F1C5E0010C76C /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,11 @@
 		D1338095192F1B400010C76C /* KODWTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KODWTests-Info.plist"; sourceTree = "<group>"; };
 		D1338097192F1B400010C76C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1338099192F1B400010C76C /* KODWTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KODWTests.m; sourceTree = "<group>"; };
+		D13380A6192F1BF80010C76C /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
+		D13380A7192F1BF80010C76C /* libBeacon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBeacon.a; sourceTree = "<group>"; };
+		D13380A8192F1BF80010C76C /* sim_libBeacon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libBeacon.a; sourceTree = "<group>"; };
+		D13380AB192F1C590010C76C /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		D13380AD192F1C5E0010C76C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +69,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D13380AE192F1C5E0010C76C /* CoreLocation.framework in Frameworks */,
+				D13380AC192F1C590010C76C /* CoreBluetooth.framework in Frameworks */,
 				D1338071192F1B400010C76C /* CoreGraphics.framework in Frameworks */,
+				D13380A9192F1BF80010C76C /* libBeacon.a in Frameworks */,
+				D13380AA192F1BF80010C76C /* sim_libBeacon.a in Frameworks */,
 				D1338073192F1B400010C76C /* UIKit.framework in Frameworks */,
 				D133806F192F1B400010C76C /* Foundation.framework in Frameworks */,
 			);
@@ -101,6 +114,8 @@
 		D133806D192F1B400010C76C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D13380AD192F1C5E0010C76C /* CoreLocation.framework */,
+				D13380AB192F1C590010C76C /* CoreBluetooth.framework */,
 				D133806E192F1B400010C76C /* Foundation.framework */,
 				D1338070192F1B400010C76C /* CoreGraphics.framework */,
 				D1338072192F1B400010C76C /* UIKit.framework */,
@@ -112,6 +127,7 @@
 		D1338074192F1B400010C76C /* KODW */ = {
 			isa = PBXGroup;
 			children = (
+				D13380A3192F1BF80010C76C /* lib */,
 				D133807D192F1B400010C76C /* AppDelegate.h */,
 				D133807E192F1B400010C76C /* AppDelegate.m */,
 				D1338080192F1B400010C76C /* Main.storyboard */,
@@ -150,6 +166,32 @@
 				D1338096192F1B400010C76C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D13380A3192F1BF80010C76C /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				D13380A4192F1BF80010C76C /* include */,
+				D13380A7192F1BF80010C76C /* libBeacon.a */,
+				D13380A8192F1BF80010C76C /* sim_libBeacon.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		D13380A4192F1BF80010C76C /* include */ = {
+			isa = PBXGroup;
+			children = (
+				D13380A5192F1BF80010C76C /* Beacon */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		D13380A5192F1BF80010C76C /* Beacon */ = {
+			isa = PBXGroup;
+			children = (
+				D13380A6192F1BF80010C76C /* Beacon.h */,
+			);
+			path = Beacon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -379,6 +421,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KODW/KODW-Prefix.pch";
 				INFOPLIST_FILE = "KODW/KODW-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KODW/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -392,6 +438,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KODW/KODW-Prefix.pch";
 				INFOPLIST_FILE = "KODW/KODW-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KODW/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Beacon.h"
 
+static NSString * const address = @"http://192.168.0.110:3000";
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate, BeaconNotificationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

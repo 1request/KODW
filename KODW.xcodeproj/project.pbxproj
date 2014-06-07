@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D10D72A61940C4AB00F4B262 /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = D10D72A51940C4AB00F4B262 /* Beacon.m */; };
 		D133806F192F1B400010C76C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D133806E192F1B400010C76C /* Foundation.framework */; };
 		D1338071192F1B400010C76C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1338070192F1B400010C76C /* CoreGraphics.framework */; };
 		D1338073192F1B400010C76C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1338072192F1B400010C76C /* UIKit.framework */; };
@@ -21,8 +22,6 @@
 		D1338090192F1B400010C76C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1338072192F1B400010C76C /* UIKit.framework */; };
 		D1338098192F1B400010C76C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1338096192F1B400010C76C /* InfoPlist.strings */; };
 		D133809A192F1B400010C76C /* KODWTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1338099192F1B400010C76C /* KODWTests.m */; };
-		D13380A9192F1BF80010C76C /* libBeacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D13380A7192F1BF80010C76C /* libBeacon.a */; };
-		D13380AA192F1BF80010C76C /* sim_libBeacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D13380A8192F1BF80010C76C /* sim_libBeacon.a */; };
 		D13380AC192F1C590010C76C /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D13380AB192F1C590010C76C /* CoreBluetooth.framework */; };
 		D13380AE192F1C5E0010C76C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D13380AD192F1C5E0010C76C /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
@@ -38,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D10D72A51940C4AB00F4B262 /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
 		D133806B192F1B400010C76C /* KODW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KODW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D133806E192F1B400010C76C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D1338070192F1B400010C76C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -58,8 +58,6 @@
 		D1338097192F1B400010C76C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1338099192F1B400010C76C /* KODWTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KODWTests.m; sourceTree = "<group>"; };
 		D13380A6192F1BF80010C76C /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
-		D13380A7192F1BF80010C76C /* libBeacon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBeacon.a; sourceTree = "<group>"; };
-		D13380A8192F1BF80010C76C /* sim_libBeacon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libBeacon.a; sourceTree = "<group>"; };
 		D13380AB192F1C590010C76C /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		D13380AD192F1C5E0010C76C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -72,8 +70,6 @@
 				D13380AE192F1C5E0010C76C /* CoreLocation.framework in Frameworks */,
 				D13380AC192F1C590010C76C /* CoreBluetooth.framework in Frameworks */,
 				D1338071192F1B400010C76C /* CoreGraphics.framework in Frameworks */,
-				D13380A9192F1BF80010C76C /* libBeacon.a in Frameworks */,
-				D13380AA192F1BF80010C76C /* sim_libBeacon.a in Frameworks */,
 				D1338073192F1B400010C76C /* UIKit.framework in Frameworks */,
 				D133806F192F1B400010C76C /* Foundation.framework in Frameworks */,
 			);
@@ -172,8 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				D13380A4192F1BF80010C76C /* include */,
-				D13380A7192F1BF80010C76C /* libBeacon.a */,
-				D13380A8192F1BF80010C76C /* sim_libBeacon.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -190,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				D13380A6192F1BF80010C76C /* Beacon.h */,
+				D10D72A51940C4AB00F4B262 /* Beacon.m */,
 			);
 			path = Beacon;
 			sourceTree = "<group>";
@@ -294,6 +289,7 @@
 				D1338085192F1B400010C76C /* ViewController.m in Sources */,
 				D133807F192F1B400010C76C /* AppDelegate.m in Sources */,
 				D133807B192F1B400010C76C /* main.m in Sources */,
+				D10D72A61940C4AB00F4B262 /* Beacon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +502,7 @@
 				D133809F192F1B400010C76C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D13380A0192F1B400010C76C /* Build configuration list for PBXNativeTarget "KODWTests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +511,7 @@
 				D13380A2192F1B400010C76C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

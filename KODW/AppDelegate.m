@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#define kRequestActivity @"http://192.168.100.156:3000/collectionapi/activities"
+#define kRequestActivity @"/collectionapi/logs"
 
 @implementation AppDelegate
 
@@ -60,18 +60,18 @@
 
 - (void)NotifyWhenEntry{
     
-    NSString *tip = @"Welcome to HKDC!";
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"KODW" message:tip delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
+//    NSString *tip = @"Welcome to HKDC! open app.";
+//    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"KODW" message:tip delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//    [alert show];
     
 }
 
 - (void)NotifyWhenExit{
-    NSString *tip = @"Goodbye, See you next time in HKDC!";
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"KODW" message:tip delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
+//    NSString *tip = @"Goodbye, See you next time in HKDC!";
+//    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"KODW" message:tip delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//    [alert show];
 }
 
 #pragma mark - beacon delegate methods
@@ -80,6 +80,9 @@
     
     
     NSString *tip = @"Welcome to HKDC !";
+    NSString *message = [NSString stringWithFormat:@"%@ region: %@", tip, beaconRegion.minor];
+    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"KODW" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [view show];
     
     if ([beaconRegion.minor integerValue] == 2000) {
         
@@ -99,7 +102,7 @@
     
     NSString *majorMinor = [NSString stringWithFormat:@"%@-%@", [beaconRegion major], [beaconRegion minor]];
     
-    [AppDelegate sendData:majorMinor];
+    [AppDelegate sendData:[beaconRegion proximityUUID] major:[beaconRegion major] minor:[beaconRegion minor]];
 }
 
 - (void)NotifyWhenExitBeacon:(CLBeaconRegion *)beaconRegion{
@@ -133,18 +136,21 @@
     //                         region.proximityUUID.UUIDString];   // Major and minor are not available at the monitoring stage
     notification.alertAction = NSLocalizedString(@"View Details", nil);
     notification.soundName = UILocalNotificationDefaultSoundName;
+    notification.regionTriggersOnce = YES;
     
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
-+ (void)sendData:(NSString *)beaconId
++ (void)sendData:(NSUUID *)beaconId major:(NSNumber *)kMajor minor:(NSNumber *)kMinor
 {
     NSLog(@"sending data...");
     
     NSNumber *time = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
+    NSString *deviceId = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     
-    NSArray *objects = [NSArray arrayWithObjects:beaconId, @"0.5", @"HKDC", time, @"0", nil];
-    NSArray *keys = [NSArray arrayWithObjects:@"beaconid", @"strength", @"username", @"time", @"__v", nil];
+//    NSArray *objects = [NSArray arrayWithObjects:[beaconId UUIDString], [kMajor stringValue], [kMinor stringValue], deviceId, time, @"0", nil];
+    NSArray *objects = [NSArray arrayWithObjects:[beaconId UUIDString], @"9", @"26057", @"3516AE72-4277-4783-93E8-CB5830E44ED2", time, nil];
+    NSArray *keys = [NSArray arrayWithObjects:@"uuid", @"major", @"minor", @"deviceId", @"time", nil];
     NSDictionary *jsonDict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
     
     NSError *error;
@@ -155,7 +161,7 @@
     
     NSLog(@"jsonRequest is %@", jsonString);
     
-    NSURL *url = [NSURL URLWithString:kRequestActivity];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"http://192.168.0.110:4000", kRequestActivity]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];

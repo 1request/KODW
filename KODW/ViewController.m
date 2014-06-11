@@ -20,7 +20,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/mobile/3516AE72-4277-4783-93E8-CB5830E44ED2", address]]]];
+    NSString *deviceId = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSLog(@"deviceId: %@", deviceId);
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/mobile/%@", address, deviceId]]]];
 }
 
 - (void)didReceiveMemoryWarning

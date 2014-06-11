@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Beacon.h"
 
-static NSString * const address = @"http://192.168.0.110:3000";
+static NSString * const address = @"http://stage.homesmartly.com";
+static NSString * const address4000 = @"http://stage.homesmartly.com:8080";
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, BeaconNotificationDelegate>
 

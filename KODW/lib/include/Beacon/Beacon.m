@@ -35,8 +35,6 @@
     
     NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:uuid];
     
-//    NSUUID *rad = [[NSUUID alloc] initWithUUIDString:kUUID_RadBeacon];
-    
     // Custom major / minor
     self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID major:kMajor minor:kMinor identifier:kIdentifier];
     self.beaconRegion.notifyEntryStateOnDisplay = YES;
@@ -44,7 +42,7 @@
     self.beaconRegion.notifyOnExit = YES;
     
     // FIXME: Hardcode Beacons
-    self.beaconRegion1 = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID major:9 minor:62253 identifier:@"Reception"];
+    self.beaconRegion1 = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID major:9 minor:62253 identifier:@"beacon1"];
     self.beaconRegion1.notifyEntryStateOnDisplay = YES;
     self.beaconRegion1.notifyOnEntry = YES;
     self.beaconRegion1.notifyOnExit = YES;
@@ -104,25 +102,12 @@
     
     [self.locationManager startMonitoringForRegion:self.beaconRegion];
     
-//    [self.locationManager startMonitoringForRegion:self.beaconRegion1];
-//    DLog(@"Monitoring turned on for region: %@.", self.beaconRegion1);
-//    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self.locationManager startMonitoringForRegion:self.beaconRegion2];
-//        DLog(@"Monitoring turned on for region: %@.", self.beaconRegion2);
-//        
-//        
-//    });
-//    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self.locationManager startMonitoringForRegion:self.beaconRegion3];
-//        DLog(@"Monitoring turned on for region: %@.", self.beaconRegion3);
-//        
-//    });
-//    
-//    [self.locationManager startMonitoringForRegion:self.beaconRegion4];
-//    [self.locationManager startMonitoringForRegion:self.beaconRegion5];
-//    [self.locationManager startMonitoringForRegion:self.beaconRegion6];
+    [self.locationManager startMonitoringForRegion:self.beaconRegion1];
+    [self.locationManager startMonitoringForRegion:self.beaconRegion2];
+    [self.locationManager startMonitoringForRegion:self.beaconRegion3];
+    [self.locationManager startMonitoringForRegion:self.beaconRegion4];
+    [self.locationManager startMonitoringForRegion:self.beaconRegion5];
+    [self.locationManager startMonitoringForRegion:self.beaconRegion6];
     
     
 }
